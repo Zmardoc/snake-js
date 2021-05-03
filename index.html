@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Snake - Where else?</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="music.js"></script>
+<script src="keys.js"></script>
+<script src="consts.js"></script>
+<script src="bonus.js"></script>
+<script src="game.js"></script>
+<script src="timer.js"></script>
+<script src="wall.js"></script>
+<script src="shit.js"></script>
+<script src="snake.js"></script>
+<script src="utils.js"></script>
+<script src="collision.js"></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+<script>
+	var worm = [];
+	var wormSize;
+	var wormShitEaten;
+	var keyStackWorm = [];
+	
+	var livesTotal;
+	var mandayCounter;
+	var moneySpent;
+	
+	$(function(){
+		resetGame(); //game
+	});
+
+	function addManday(){
+		mandayCounter++;
+	}
+	
+	function addMonth(){
+		mandayCounter += 30; //mesic
+	}
+	
+	function refreshHud(){
+		$("#shitEaten").text(shitEaten);
+		$("#livesCounter").empty();
+		
+		for(i = 0; i < livesTotal; i++){
+			$("#livesCounter").append("<div class='live'></div>");
+		}		
+		$("#gameSpeed").text(gameSpeed);		
+		$("#keyStack").html(keyStack);
+		$("#mandaySpent").text(mandayCounter);
+		moneySpent = mandayCounter * MONEY_PER_DAY;
+		$("#moneySpent").text(moneySpent.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ") + " Kč,-");
+	}
+	
+	function resetHud(){
+		livesTotal = LIVES_TOTAL;
+		mandayCounter = MANDAY_COUNTER;	
+		moneySpent = mandayCounter * MONEY_PER_DAY;	
+		refreshHud();
+	}
+
+</script>
+<body>
+	<div id="panel">
+		<audio controls="controls1" id="crunch" style="display:none;">
+			<source src="music/crunch.wav"  type="audio/wav">
+			<source src="music/tuba.mp3"  type="audio/wav">
+		</audio>
+		<audio controls="controls" id="theme" style="display:none;">
+			<source src="music/dorady.mp3"  type="audio/mpeg">
+			<source src="music/kybel.mp3"  type="audio/mpeg">
+			<source src="music/svoloc0.mp3"  type="audio/mpeg">
+			<source src="music/svoloc1.mp3"  type="audio/mpeg">
+			<source src="music/zputnik0.mp3"  type="audio/mpeg">
+			<source src="music/zputnik1.mp3"  type="audio/mpeg">
+			<source src="music/segry0.mp3"  type="audio/mpeg">
+			<source src="music/segry1.mp3"  type="audio/mpeg">
+			<source src="music/segry2.mp3"  type="audio/mpeg">
+			<source src="music/kam0.mp3"  type="audio/mpeg">
+			<source src="music/kam1.mp3"  type="audio/mpeg">
+			<source src="music/kam2.mp3"  type="audio/mpeg">
+			<source src="music/kam3.mp3"  type="audio/mpeg">
+			<source src="music/kam4.mp3"  type="audio/mpeg">
+			<source src="music/driak.mp3"  type="audio/mpeg">
+			<source src="music/theme.mp3"  type="audio/mpeg">
+		</audio>
+		<img src="logo.png"/>
+		<div class="wholePage">
+			<div class="tutorial" id="tutorial">
+				[Press Enter]<br>
+				<small>Hint: <br>
+				[Enter] - Pauza/Start<br>[&#8592;&#8593;&#8594;&#8595;] - Pohyb<br>
+				[r] - Restart<br>
+				[space] - Zrychlení<br>
+				[m] - Zvuk<br>[n] - Dalsi song
+				</small>
+			</div>		
+		</div>		
+		<table class="hud">
+			<tr><td>Projects complete:</td><td id="shitEaten"></td></tr>
+			<tr><td>Game speed:</td><td  id="gameSpeed"></td></tr>
+			<tr><td>Manday spent:</td><td  id="mandaySpent"></td></tr>
+			<tr><td>Money spent:</td><td  id="moneySpent"></td></tr>
+			<tr><td>Key stack:</td><td  id="keyStack"></td></tr>
+			<tr><td>Lives:</td><td  id="livesCounter"></td></tr>
+		</table>
+		<div class="shit" id="shit"></div>
+		<div class="lost" id="lost" onclick="resetGame();">Bohužels prohrál. Jako vždy.</div>
+	</div>	
+</body>
+</html>
